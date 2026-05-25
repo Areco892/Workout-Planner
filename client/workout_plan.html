@@ -133,6 +133,7 @@
         </main>
 
         <script>
+            let API_URL = "https://workout-planner-wf33.onrender.com/";
             const workoutContainer = document.getElementById("workout-container");
             const workoutPanel = document.getElementById("workout-panel");
             const createBtn = document.getElementById("create-btn");
@@ -144,7 +145,7 @@
                 Server-side
             *******************/
             async function serverGetWorkouts() {
-                const response = await fetch("http://localhost:5000/workoutplans", {
+                const response = await fetch(`${API_URL}/workoutplans`, {
                     method: "GET"
                 });
                 const workouts = await response.json();
@@ -152,7 +153,7 @@
             }
 
             async function serverGetExercises(workoutID) {
-                const response = await fetch(`http://localhost:5000/workoutplans/${workoutID}`, {
+                const response = await fetch(`${API_URL}/workoutplans/${workoutID}`, {
                     method: "GET"
                 });
                 const exercises = await response.json();
@@ -160,7 +161,7 @@
             }
 
             async function serverCreateWorkout(workoutName) {
-                const response = await fetch("http://localhost:5000/workoutplans", {
+                const response = await fetch("${API_URL}/workoutplans", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name: workoutName })
@@ -170,7 +171,7 @@
             }
 
             async function serverUpdateWorkout(workoutId, workoutName) {
-                const response = await fetch(`http://localhost:5000/workoutplans/${workoutId}`, {
+                const response = await fetch(`${API_URL}/workoutplans/${workoutId}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name: workoutName })
@@ -180,7 +181,7 @@
             }
 
             async function serverDeleteWorkout(workoutId) {
-                const response = await fetch(`http://localhost:5000/workoutplans/${workoutId}`, {
+                const response = await fetch(`${API_URL}/workoutplans/${workoutId}`, {
                     method: "DELETE"
                 });
                 const message = (await response.json()).message;
@@ -188,7 +189,7 @@
             }
 
             async function serverDeleteExercise(workoutId, exerciseId) {
-                const response = await fetch(`http://localhost:5000/workoutplans/${workoutId}/${exerciseId}`, {
+                const response = await fetch(`${API_URL}/workoutplans/${workoutId}/${exerciseId}`, {
                     method: "DELETE"
                 });
                 const message = (await response.json()).message;

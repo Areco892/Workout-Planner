@@ -1,4 +1,4 @@
-CREATE DATABASE gadget;
+CREATE DATABASE workout_planner;
 
 CREATE TABLE exercise(
     eid SERIAL PRIMARY KEY,

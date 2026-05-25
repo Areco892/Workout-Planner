@@ -236,6 +236,7 @@
             <div id="exercise-container"></div>
         </main>
         <script>
+            let API_URL = "https://workout-planner-wf33.onrender.com/";
             let exerciseContainer = document.getElementById("exercise-container");
 
             const exercisePanel = document.getElementById("exercise-panel");
@@ -260,7 +261,7 @@
 
             async function serverGetExercises(difficulty, target) {
                 try {
-                    const response = await fetch(`http://localhost:5000/exercises?difficulty=${difficulty}&target=${target}`, {
+                    const response = await fetch(`${API_URL}/exercises?difficulty=${difficulty}&target=${target}`, {
                         method: "GET"
                     });
                     const exercises = await response.json();
@@ -273,7 +274,7 @@
 
             async function serverCreateExercise(exerciseName, exerciseImage, exerciseTargetMuscle, exerciseDifficulty) {
                 try {
-                    const response = await fetch("http://localhost:5000/exercises", {
+                    const response = await fetch(`${API_URL}/exercises`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json"},
                         body: JSON.stringify({ name: exerciseName, image: exerciseImage, target: exerciseTargetMuscle, difficulty: exerciseDifficulty })
@@ -288,7 +289,7 @@
 
             async function serverUpdateExercise(exerciseId, exerciseName, exerciseImage, exerciseTargetMuscle, exerciseDifficulty) {
                 try {
-                    const response = await fetch(`http://localhost:5000/exercises/${exerciseId}`,{
+                    const response = await fetch(`${API_URL}/exercises/${exerciseId}`,{
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ name: exerciseName, image: exerciseImage, target: exerciseTargetMuscle, difficulty: exerciseDifficulty })
@@ -300,7 +301,7 @@
 
             async function serverDeleteExercise(exerciseId) {
                 try {
-                    const response = await fetch(`http://localhost:5000/exercises/${exerciseId}`,{
+                    const response = await fetch(`${API_URL}/exercises/${exerciseId}`,{
                         method: "DELETE"
                     });
                 } catch (error) {
@@ -310,7 +311,7 @@
 
             async function serverGetWorkouts(){
                 try {
-                    const response = await fetch("http://localhost:5000/workoutplans", {
+                    const response = await fetch(`${API_URL}/workoutplans`, {
                         method: "GET"
                     });
                     const workouts = await response.json();
@@ -322,7 +323,7 @@
 
             async function serverAddExercise(workoutId, exerciseId, exerciseSets, exerciseWeight, exerciseReps) {
                 try {
-                    let response = await fetch("http://localhost:5000/exercises/add", {
+                    let response = await fetch(`${API_URL}/exercises/add`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ wid: workoutId, eid: exerciseId, sets: exerciseSets, weight: exerciseWeight, reps: exerciseReps })
@@ -339,7 +340,7 @@
             }
 
             async function serverCreateWorkout(workoutName) {
-                const response = await fetch("http://localhost:5000/workoutplans", {
+                const response = await fetch(`${API_URL}/workoutplans`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name: workoutName })
