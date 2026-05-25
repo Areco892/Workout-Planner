@@ -161,7 +161,7 @@
             }
 
             async function serverCreateWorkout(workoutName) {
-                const response = await fetch("${API_URL}/workoutplans", {
+                const response = await fetch(`${API_URL}/workoutplans`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name: workoutName })
