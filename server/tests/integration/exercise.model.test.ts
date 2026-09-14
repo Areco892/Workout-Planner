@@ -72,11 +72,11 @@ describeWithDatabase("exercise model integration", () => {
       "TRUNCATE TABLE workout_exercise, workout, exercise RESTART IDENTITY CASCADE",
     );
     await pool.query(
-      `INSERT INTO exercise (name, image, description, target, difficulty)
+      `INSERT INTO exercise (name, image, target, difficulty)
        VALUES
-         ('Chest Press', 'img/chest-press.webp', 'Chest exercise', 'Chest', 'Beginner'),
-         ('Chest Fly', 'img/chest-fly.webp', 'Chest exercise', 'Chest', 'Intermediate'),
-         ('Deadlift', 'img/deadlift.webp', 'Back exercise', 'Back', 'Advanced')`,
+         ('Chest Press', 'img/chest-press.webp', 'Chest', 'Beginner'),
+         ('Chest Fly', 'img/chest-fly.webp', 'Chest', 'Intermediate'),
+         ('Deadlift', 'img/deadlift.webp', 'Back', 'Advanced')`,
     );
   });
 
