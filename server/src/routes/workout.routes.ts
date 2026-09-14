@@ -29,12 +29,6 @@ router.delete(
   validate({ params: workoutExerciseIdSchema }),
   deleteExercise,
 );
-// Temporary compatibility route for DELETE /workoutplans/:wid/:eid.
-router.delete(
-  "/:wid/:eid",
-  validate({ params: workoutExerciseIdSchema }),
-  deleteExercise,
-);
 router.delete("/:id", validate({ params: workoutIdSchema }), deleteWorkout);
 
 export default router;

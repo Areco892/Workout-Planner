@@ -102,17 +102,6 @@ describe("workout routes", () => {
     expect(WorkoutService.deleteExerciseService).toHaveBeenCalledWith(2, 8);
   });
 
-  it("keeps the old /workoutplans endpoints working temporarily", async () => {
-    vi.mocked(WorkoutService.deleteExerciseService).mockResolvedValue(
-      "Exercise was deleted!",
-    );
-
-    const response = await request(app).delete("/workoutplans/2/8");
-
-    expect(response.status).toBe(200);
-    expect(WorkoutService.deleteExerciseService).toHaveBeenCalledWith(2, 8);
-  });
-
   it("returns 400 for an invalid workout ID", async () => {
     const response = await request(app).get("/workouts/invalid");
 
