@@ -145,7 +145,7 @@
                 Server-side
             *******************/
             async function serverGetWorkouts() {
-                const response = await fetch(`${API_URL}/workoutplans`, {
+                const response = await fetch(`${API_URL}/workouts`, {
                     method: "GET"
                 });
                 const workouts = await response.json();
@@ -153,7 +153,7 @@
             }
 
             async function serverGetExercises(workoutID) {
-                const response = await fetch(`${API_URL}/workoutplans/${workoutID}`, {
+                const response = await fetch(`${API_URL}/workouts/${workoutID}`, {
                     method: "GET"
                 });
                 const exercises = await response.json();
@@ -161,7 +161,7 @@
             }
 
             async function serverCreateWorkout(workoutName) {
-                const response = await fetch(`${API_URL}/workoutplans`, {
+                const response = await fetch(`${API_URL}/workouts`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name: workoutName })
@@ -171,7 +171,7 @@
             }
 
             async function serverUpdateWorkout(workoutId, workoutName) {
-                const response = await fetch(`${API_URL}/workoutplans/${workoutId}`, {
+                const response = await fetch(`${API_URL}/workouts/${workoutId}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name: workoutName })
@@ -181,7 +181,7 @@
             }
 
             async function serverDeleteWorkout(workoutId) {
-                const response = await fetch(`${API_URL}/workoutplans/${workoutId}`, {
+                const response = await fetch(`${API_URL}/workouts/${workoutId}`, {
                     method: "DELETE"
                 });
                 const message = (await response.json()).message;
@@ -189,7 +189,7 @@
             }
 
             async function serverDeleteExercise(workoutId, exerciseId) {
-                const response = await fetch(`${API_URL}/workoutplans/${workoutId}/${exerciseId}`, {
+                const response = await fetch(`${API_URL}/workouts/${workoutId}/exercises/${exerciseId}`, {
                     method: "DELETE"
                 });
                 const message = (await response.json()).message;

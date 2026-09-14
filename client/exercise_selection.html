@@ -311,7 +311,7 @@
 
             async function serverGetWorkouts(){
                 try {
-                    const response = await fetch(`${API_URL}/workoutplans`, {
+                    const response = await fetch(`${API_URL}/workouts`, {
                         method: "GET"
                     });
                     const workouts = await response.json();
@@ -340,7 +340,7 @@
             }
 
             async function serverCreateWorkout(workoutName) {
-                const response = await fetch(`${API_URL}/workoutplans`, {
+                const response = await fetch(`${API_URL}/workouts`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name: workoutName })
