@@ -105,3 +105,25 @@ Serve the files in `client` with a static web server.
 
 Then open:
 http://localhost:3000
+
+## Testing
+
+Route tests mock the service layer and do not require PostgreSQL:
+
+`npm run test:unit`
+
+Database integration tests use a separate local database. Create it once:
+
+`npm run db:test:create`
+
+Then run only the integration tests:
+
+`npm run test:integration`
+
+To run both groups:
+
+`npm test`
+
+The test database name must end in `_test`. Integration tests recreate its tables
+and data, so never configure `TEST_DATABASE_URL` with a development or production
+database.
