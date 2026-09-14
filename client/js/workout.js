@@ -35,7 +35,7 @@
                 
                 const exerciseImage = document.createElement("img");
                 exerciseImage.src = exercise.image;
-                exerciseImage.alt = exercise.description;
+                exerciseImage.alt = exercise.name;
                 
                 const exerciseTargetMuscle = document.createElement("span");
                 exerciseTargetMuscle.textContent = exercise.target;

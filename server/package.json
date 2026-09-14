@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "db:migrate": "node scripts/run-sql.cjs db/migrations/001_initial_schema.sql",
+    "db:migrate:remove-description": "node scripts/run-sql.cjs db/migrations/002_remove_exercise_description.sql",
     "db:seed": "node scripts/run-sql.cjs db/seeds/exercises.sql",
     "db:setup": "npm run db:migrate && npm run db:seed",
     "db:test:create": "node scripts/create-test-database.cjs",

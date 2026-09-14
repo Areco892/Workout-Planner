@@ -4,7 +4,6 @@ CREATE TABLE exercise (
     eid SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     image VARCHAR(255),
-    description TEXT,
     target VARCHAR(100) NOT NULL,
     difficulty VARCHAR(50) NOT NULL
 );

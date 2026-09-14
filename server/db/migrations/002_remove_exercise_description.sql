@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE exercise
+DROP COLUMN IF EXISTS description;
+
+COMMIT;

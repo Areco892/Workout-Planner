@@ -17,7 +17,7 @@ export async function getExercises(workoutId: number) {
     }
 
     const exercises = await pool.query(
-        `SELECT e.eid, e.name, e.image, e.description, e.target, e.difficulty,
+        `SELECT e.eid, e.name, e.image, e.target, e.difficulty,
                 we.sets, we.weight, we.reps
         FROM workout_exercise we
         JOIN exercise e
