@@ -3,6 +3,7 @@ import cors from "cors";
 import workoutRoutes from "./routes/workout.routes";
 import exerciseRoutes from "./routes/exercise.routes";
 import workoutPlanRoutes from "./routes/workout_plan.routes";
+import { errorHandler } from "./middleware/error-handler";
 
 const app = express();
 
@@ -15,5 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/workouts", workoutRoutes);
 app.use("/exercises", exerciseRoutes);
 app.use("/workoutplans", workoutPlanRoutes);
+
+// Error handling must be registered after every route.
+app.use(errorHandler);
 
 export default app;

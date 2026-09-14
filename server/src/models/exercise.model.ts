@@ -34,7 +34,7 @@ export async function createExercise(name: string, image: string, target: string
     return newExercise;
 }
 
-export async function updateExercise(id: string, name: string, image: string, target: string, difficulty: string) { 
+export async function updateExercise(id: number, name: string, image: string, target: string, difficulty: string) {
     const updatedExercise = await pool.query(
         `UPDATE exercise 
         SET name = $1,
@@ -44,17 +44,18 @@ export async function updateExercise(id: string, name: string, image: string, ta
         WHERE eid = $5`,
         [name, image, target, difficulty, id]
     );
+    return updatedExercise;
 }
 
-export async function deleteExercise(id: string) {
+export async function deleteExercise(id: number) {
     const deleteExercise = await pool.query(
         "DELETE FROM exercise WHERE eid = $1;", 
         [id]
     );
-    return "Exercise was deleted!";
+    return deleteExercise;
 }
 
-export async function addExercise(wid: string, eid: string, sets: string, weight: string, reps: string) {
+export async function addExercise(wid: number, eid: number, sets: number, weight: number, reps: number) {
     const exercise = await pool.query(
         `INSERT INTO workout_exercise (wid, eid, sets, weight, reps)
         VALUES ($1, $2, $3, $4, $5)`, 
