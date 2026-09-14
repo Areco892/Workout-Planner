@@ -1,10 +1,10 @@
-CREATE DATABASE workout_planner;
-
 CREATE TABLE exercise(
     eid SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     image VARCHAR(255),
-    description TEXT
+    description TEXT,
+    target VARCHAR(100) NOT NULL,
+    difficulty VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE workout(
@@ -21,7 +21,6 @@ CREATE TABLE workout_exercise(
     sets INTEGER,
     weight INTEGER,
     reps INTEGER,
-    
 
     FOREIGN KEY (wid) REFERENCES workout(wid) ON DELETE CASCADE,
     FOREIGN KEY (eid) REFERENCES exercise(eid) ON DELETE CASCADE,

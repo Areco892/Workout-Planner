@@ -2,9 +2,12 @@
   "name": "workout-planner",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -43,6 +46,7 @@
     "@types/lodash": "^4.17.23",
     "@types/nanoid": "^2.1.0",
     "@types/node": "^25.2.1",
+    "@types/pg": "^8.23.1",
     "@types/pino": "^7.0.4",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
