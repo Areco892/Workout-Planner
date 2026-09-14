@@ -2,6 +2,7 @@ import request from "supertest";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import app from "../src/app";
 import * as ExerciseServices from "../src/services/exercise.service";
+import { AppError } from "../src/errors/app-error";
 
 vi.mock("../src/services/exercise.service", () => ({
   getExercisesService: vi.fn(),
@@ -66,7 +67,7 @@ describe("exercise routes", () => {
 
     const response = await request(app).post("/exercises").send(exercise);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     expect(response.body).toEqual(serviceResult);
     expect(ExerciseServices.createExerciseService).toHaveBeenCalledWith(
       exercise.name,
@@ -101,7 +102,13 @@ describe("exercise routes", () => {
   });
 
   it("PUT /exercises/:id updates an exercise", async () => {
-    vi.mocked(ExerciseServices.updateExerciseService).mockResolvedValue(undefined);
+    vi.mocked(ExerciseServices.updateExerciseService).mockResolvedValue({
+      command: "UPDATE",
+      rowCount: 1,
+      oid: 0,
+      fields: [],
+      rows: [],
+    } as any);
 
     const response = await request(app).put("/exercises/8").send({
       name: "Front Raise",
@@ -113,7 +120,7 @@ describe("exercise routes", () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ message: "Exercise was updated!" });
     expect(ExerciseServices.updateExerciseService).toHaveBeenCalledWith(
-      "8",
+      8,
       "Front Raise",
       "img/front-raises.webp",
       "Shoulders",
@@ -130,7 +137,76 @@ describe("exercise routes", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ message: "Exercise was deleted!" });
-    expect(ExerciseServices.deleteExerciseService).toHaveBeenCalledWith("8");
+    expect(ExerciseServices.deleteExerciseService).toHaveBeenCalledWith(8);
+  });
+
+  it("uses All for omitted exercise filters", async () => {
+    vi.mocked(ExerciseServices.getExercisesService).mockResolvedValue([]);
+
+    const response = await request(app).get("/exercises");
+
+    expect(response.status).toBe(200);
+    expect(ExerciseServices.getExercisesService).toHaveBeenCalledWith(
+      "All",
+      "All",
+    );
+  });
+
+  it("returns 400 without calling the service when a body is invalid", async () => {
+    const response = await request(app).post("/exercises").send({
+      name: "Push Up",
+      image: "img/push-up.webp",
+      target: "Chest",
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.error.code).toBe("VALIDATION_ERROR");
+    expect(response.body.error.details).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ field: "body.difficulty" }),
+      ]),
+    );
+    expect(ExerciseServices.createExerciseService).not.toHaveBeenCalled();
+  });
+
+  it("returns 400 for an invalid exercise ID", async () => {
+    const response = await request(app).delete("/exercises/not-a-number");
+
+    expect(response.status).toBe(400);
+    expect(response.body.error.code).toBe("VALIDATION_ERROR");
+    expect(ExerciseServices.deleteExerciseService).not.toHaveBeenCalled();
+  });
+
+  it("returns 404 when the exercise does not exist", async () => {
+    vi.mocked(ExerciseServices.deleteExerciseService).mockRejectedValue(
+      new AppError(404, "EXERCISE_NOT_FOUND", "Exercise not found"),
+    );
+
+    const response = await request(app).delete("/exercises/999");
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({
+      error: {
+        code: "EXERCISE_NOT_FOUND",
+        message: "Exercise not found",
+      },
+    });
+  });
+
+  it("returns 409 when an exercise name already exists", async () => {
+    vi.mocked(ExerciseServices.createExerciseService).mockRejectedValue(
+      Object.assign(new Error("duplicate key"), { code: "23505" }),
+    );
+
+    const response = await request(app).post("/exercises").send({
+      name: "Chest Press",
+      image: "img/chest-press.webp",
+      target: "Chest",
+      difficulty: "Beginner",
+    });
+
+    expect(response.status).toBe(409);
+    expect(response.body.error.code).toBe("RESOURCE_CONFLICT");
   });
 
   it("returns 500 when the exercise service fails", async () => {
@@ -144,6 +220,11 @@ describe("exercise routes", () => {
       .query({ difficulty: "All", target: "All" });
 
     expect(response.status).toBe(500);
-    expect(response.body).toEqual({ message: "Server error." });
+    expect(response.body).toEqual({
+      error: {
+        code: "INTERNAL_SERVER_ERROR",
+        message: "An unexpected error occurred",
+      },
+    });
   });
 });
