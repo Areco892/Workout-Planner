@@ -12,7 +12,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "start": "node dist/server.js",
     "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "vitest run --configLoader native tests/exercise.routes.test.ts",
+    "test:unit": "vitest run --configLoader native --exclude tests/integration/**",
     "test:coverage": "vitest run --configLoader native --coverage",
     "test:integration": "vitest run --configLoader native tests/integration",
     "test:watch": "vitest --configLoader native",
