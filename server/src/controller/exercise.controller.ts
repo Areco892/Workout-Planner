@@ -8,7 +8,7 @@ export async function getExercises(req: Request, res: Response){
         res.json(exercises);
     } catch (error) {
         console.error(error);
-        res.send(500).json({ message: "Server error." });
+        res.status(500).json({ message: "Server error." });
     }
 }
 
@@ -19,7 +19,7 @@ export async function createExercise(req: Request, res: Response) {
         res.json(newExercise);
     } catch (error) {
         console.error(error);
-        res.send(500).json({ message: "Server error." });
+        res.status(500).json({ message: "Server error." });
     }
 }
 
@@ -31,7 +31,7 @@ export async function updateExercise(req: Request, res: Response) {
         res.json({ message: "Exercise was updated!" });
     } catch (error) {
         console.error(error);
-        res.send(500).json({ message: "Server error." });
+        res.status(500).json({ message: "Server error." });
     }
 }
 
@@ -42,7 +42,7 @@ export async function deleteExercise(req: Request, res: Response) {
         res.json({ message: "Exercise was deleted!" });
     } catch (error) {
         console.error(error);
-        res.send(500).json({ message: "Server error."});
+        res.status(500).json({ message: "Server error."});
     }
 }
 

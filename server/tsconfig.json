@@ -43,5 +43,7 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
     "removeComments": true
-  }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "node_modules", "tests"]
 }
