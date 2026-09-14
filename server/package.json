@@ -5,6 +5,9 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
+    "db:migrate": "node scripts/run-sql.cjs db/migrations/001_initial_schema.sql",
+    "db:seed": "node scripts/run-sql.cjs db/seeds/exercises.sql",
+    "db:setup": "npm run db:migrate && npm run db:seed",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit"

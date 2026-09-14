@@ -79,17 +79,29 @@ Exercise
 ### Clone repository
 `git clone git@github.com:Areco892/Workout-Planner.git`
 
-### Go into project
-`cd workout-planner`
+### Go into the backend
+`cd Workout-Planner/server`
 
 ### Install backend dependencies
 `npm install`
 
-### Start backend server
+### Configure the environment
+Copy `.env.example` to `.env` and update `DATABASE_URL` for your local PostgreSQL instance.
+
+Create the `workout_planner` database, then initialize its tables and shared exercise catalog:
+
+`npm run db:setup`
+
+### Start the backend during development
+`npm run dev`
+
+### Run the backend in production mode
+`npm run build`
+
 `npm start`
 
 ### Start frontend
-`npm run dev`
+Serve the files in `client` with a static web server.
 
 Then open:
 http://localhost:3000
